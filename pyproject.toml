@@ -9,9 +9,13 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "fastapi>=0.153.0",
+    "ipykernel>=7.4.0",
+    "matplotlib>=3.11.2",
     "numpy>=2.5.4",
+    "opencv-python>=5.0.0.93",
     "pandas>=3.0.6",
     "scikit-learn>=1.9.1",
+    "seaborn>=0.13.2",
     "tensorflow>=2.22.0rc0",
 ]
 
