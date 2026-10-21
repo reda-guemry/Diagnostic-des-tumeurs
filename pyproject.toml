@@ -7,7 +7,13 @@ authors = [
     { name = "reda-guemry", email = "guemryreda@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "fastapi>=0.153.0",
+    "numpy>=2.5.4",
+    "pandas>=3.0.6",
+    "scikit-learn>=1.9.1",
+    "tensorflow>=2.22.0rc0",
+]
 
 [project.scripts]
 diagnostic-des-tumeurs = "diagnostic_des_tumeurs:main"
