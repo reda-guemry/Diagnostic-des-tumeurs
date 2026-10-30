@@ -59,7 +59,7 @@ annotation per image, stored as `{Train,Val}/<class>/images` and
    `images/{train,valid,test}` and `labels/{train,valid,test}`, copies each
    image together with its annotation, splits the archive `Val` set 50/50 into
    validation and test, and writes the dataset and augmentation configuration.
-   - Outputs: `data/yolo/data.yaml`, `data/yolo/train_config.json` and the
+   - Outputs: `data/yolo/data.yaml` and the
      copied dataset (ignored by Git).
 3. **`07_yolo_training.ipynb`** — chooses a GPU or CPU training profile,
    trains YOLOv8n with the augmentation policy, plots the losses and metrics,
