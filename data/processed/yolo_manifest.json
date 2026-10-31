@@ -1,5 +1,5 @@
 {
-  "created_by": "05_yolo_data_overview.ipynb",
+  "created_by": "diagnostic_des_tumeurs.yolo.functions.inspection",
   "source_dir": "data/archive",
   "format": "YOLO detection: class x_center y_center width height (normalized)",
   "classes": [
