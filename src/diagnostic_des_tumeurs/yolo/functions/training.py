@@ -93,7 +93,7 @@ def resolve_training_args(
             f"{paths.yolo_data_yaml} not found. Run the preprocessing step first."
         )
     device, device_name, use_gpu = _resolve_device(config)
-    epochs = config.epochs if config.epochs is not None else (100 if use_gpu else 10)
+    epochs = config.epochs if config.epochs is not None else (30 if use_gpu else 10)
     imgsz = config.imgsz if config.imgsz is not None else (640 if use_gpu else 320)
     batch = config.batch if config.batch is not None else (32 if use_gpu else 8)
     patience = (
