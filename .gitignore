@@ -10,9 +10,21 @@ models/yolo/
 
 # Generated reports and overview figures
 models/inception_reports/
+models/airflow_artifacts.json
 data/processed/yolo_overview/
+
+# Local Airflow deployment
+.airflow/
+
+# Docker Compose overrides and local environment
+.env
+docker-compose.override.yml
+
+# Streamlit local secrets
+.streamlit/secrets.toml
 
 # MLflow tracking store (SQLite backend is required for the model registry)
 mlflow.db
+mlflow-data/
 mlartifacts/
 mlruns/

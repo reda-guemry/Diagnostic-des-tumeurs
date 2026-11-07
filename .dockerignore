@@ -1,0 +1,30 @@
+# Version control and local tooling
+.git
+.gitignore
+.venv
+.ruff_cache
+.airflow
+*.log
+
+# Local environment and secrets
+.env
+.streamlit/secrets.toml
+
+# Datasets and trained models are mounted as volumes, never baked into images
+data
+models
+mlflow-data
+mlflow.db
+mlruns
+mlartifacts
+*.keras
+*.pt
+*.onnx
+
+# Notebooks and generated reports are not required by the API/UI/Airflow image
+notebooks
+models/inception_reports
+models/yolo
+docs
+**/__pycache__
+**/*.py[cod]

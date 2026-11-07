@@ -1,0 +1,117 @@
+name: diagnostic-des-tumeurs
+
+# Shared build/runtime settings. Services add only the volumes they need so the
+# inference API, UI and tracking server stay separated.
+x-app: &app
+  image: diagnostic-des-tumeurs:runtime
+  build:
+    context: .
+    target: runtime
+  init: true
+  restart: unless-stopped
+  environment:
+    BTD_PROJECT_ROOT: /app
+    MLFLOW_TRACKING_URI: http://mlflow:5000
+
+services:
+  mlflow:
+    <<: *app
+    command:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /mlflow/artifacts
+        exec mlflow server \
+          --host 0.0.0.0 \
+          --port 5000 \
+          --backend-store-uri sqlite:////mlflow/mlflow.db \
+          --default-artifact-root /mlflow/artifacts \
+          --serve-artifacts
+    ports:
+      - "${BTD_MLFLOW_PORT:-5000}:5000"
+    volumes:
+      - ./mlflow-data:/mlflow
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:5000/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  api:
+    <<: *app
+    command:
+      - uvicorn
+      - diagnostic_des_tumeurs.api:app
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+    ports:
+      - "${BTD_API_PORT:-8000}:8000"
+    volumes:
+      - ./data:/app/data:ro
+      - ./models:/app/models:ro
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  ui:
+    <<: *app
+    command:
+      - streamlit
+      - run
+      - app/streamlit_app.py
+      - --server.address=0.0.0.0
+      - --server.port=8501
+      - --server.headless=true
+      - --browser.gatherUsageStats=false
+    environment:
+      BTD_PROJECT_ROOT: /app
+      BTD_API_URL: http://api:8000
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    ports:
+      - "${BTD_UI_PORT:-8501}:8501"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8501/_stcore/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Optional orchestration service:
+  #   docker compose --profile orchestration up --build airflow
+  # Airflow uses its own local SQLite metadata store in ./.airflow and talks to
+  # the MLflow service over HTTP. Data and models are mounted read-write because
+  # the DAG trains and evaluates models.
+  airflow:
+    <<: *app
+    image: diagnostic-des-tumeurs:airflow
+    build:
+      context: .
+      target: airflow
+    profiles: ["orchestration"]
+    command: ["airflow", "standalone"]
+    environment:
+      BTD_PROJECT_ROOT: /app
+      AIRFLOW_HOME: /app/.airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__DAGS_FOLDER: /app/airflow/dags
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    ports:
+      - "${BTD_AIRFLOW_PORT:-8080}:8080"
+    volumes:
+      - ./.airflow:/app/.airflow
+      - ./airflow/dags:/app/.airflow/dags:ro
+      - ./airflow/dags:/app/airflow/dags:ro
+      - ./data:/app/data
+      - ./models:/app/models
+    depends_on:
+      mlflow:
+        condition: service_healthy

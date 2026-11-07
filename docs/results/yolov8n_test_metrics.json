@@ -1,0 +1,45 @@
+{
+  "model": "brain_tumor_yolov8n.pt",
+  "dataset": "data/yolo/data.yaml:test",
+  "images": 255,
+  "imgsz": 640,
+  "conf": 0.001,
+  "iou": 0.7,
+  "metrics": {
+    "metrics/precision(B)": 0.9467304653770229,
+    "metrics/recall(B)": 0.964991335321697,
+    "metrics/mAP50(B)": 0.9808987099633812,
+    "metrics/mAP50-95(B)": 0.7974334421759209,
+    "fitness": 0.7974334421759209
+  },
+  "per_class": [
+    {
+      "class": "Meningioma",
+      "precision": 0.9763605605056722,
+      "recall": 1.0,
+      "mAP50": 0.9948611111111111,
+      "mAP50-95": 0.8543999352731548
+    },
+    {
+      "class": "No Tumor",
+      "precision": 1.0,
+      "recall": 0.9934955664912104,
+      "mAP50": 0.995,
+      "mAP50-95": 0.7925287582766748
+    },
+    {
+      "class": "Glioma",
+      "precision": 0.8747846503994178,
+      "recall": 0.9324324324324325,
+      "mAP50": 0.9545626210978251,
+      "mAP50-95": 0.7781568079149771
+    },
+    {
+      "class": "Pituitary",
+      "precision": 0.9357766506030014,
+      "recall": 0.9340373423631448,
+      "mAP50": 0.9791711076445887,
+      "mAP50-95": 0.764648267238877
+    }
+  ]
+}

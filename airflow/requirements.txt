@@ -1,0 +1,4 @@
+# Airflow is an optional orchestration dependency. Install it after `uv sync`:
+#   uv pip install -r airflow/requirements.txt
+apache-airflow>=3.0,<4
+apache-airflow-providers-standard>=1.0,<2

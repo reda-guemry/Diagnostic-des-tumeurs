@@ -32,7 +32,7 @@ class YoloConfig:
     """Hyperparameters of the YOLOv8 workflow.
 
     ``None`` values use the defaults for the current device
-    (GPU: 100 epochs / 640 px / batch 32, CPU: 10 epochs / 320 px / batch 8).
+    (GPU: 30 epochs / 640 px / batch 32, CPU: 10 epochs / 320 px / batch 8).
     """
 
     epochs: int | None = None

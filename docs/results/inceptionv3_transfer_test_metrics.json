@@ -1,0 +1,81 @@
+{
+  "model": "inceptionv3_transfer.keras",
+  "dataset": "data/processed/splits.json:test",
+  "images": 1054,
+  "classes": [
+    "glioma",
+    "meningioma",
+    "notumor",
+    "pituitary"
+  ],
+  "accuracy": 0.9240986717267552,
+  "loss": 0.19004427354426223,
+  "macro_precision": 0.9228413560302009,
+  "macro_recall": 0.9206607024662581,
+  "macro_f1": 0.921159390655409,
+  "weighted_precision": 0.9248336948172735,
+  "weighted_recall": 0.9240986717267552,
+  "weighted_f1": 0.9238979044405332,
+  "per_class": [
+    {
+      "class": "glioma",
+      "precision": 0.9601769911504425,
+      "recall": 0.8930041152263375,
+      "f1": 0.9253731343283582,
+      "support": 243
+    },
+    {
+      "class": "meningioma",
+      "precision": 0.8530612244897959,
+      "recall": 0.8461538461538461,
+      "f1": 0.8495934959349594,
+      "support": 247
+    },
+    {
+      "class": "notumor",
+      "precision": 0.97,
+      "recall": 0.97,
+      "f1": 0.97,
+      "support": 300
+    },
+    {
+      "class": "pituitary",
+      "precision": 0.9081272084805654,
+      "recall": 0.9734848484848485,
+      "f1": 0.9396709323583181,
+      "support": 264
+    }
+  ],
+  "confusion_matrix": [
+    [
+      217,
+      23,
+      1,
+      2
+    ],
+    [
+      8,
+      209,
+      8,
+      22
+    ],
+    [
+      1,
+      6,
+      291,
+      2
+    ],
+    [
+      0,
+      7,
+      0,
+      257
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "glioma",
+    "meningioma",
+    "notumor",
+    "pituitary"
+  ]
+}
